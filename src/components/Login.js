@@ -51,10 +51,12 @@ class Login extends Component {
     );
   }
 
+  // used to implement the mutations that we need to send for the login functionality
   _confirm = async () => {
-    // placeholder
+    // placeholder to implement mutations that will be sent for login functionality
   };
 
+  // Unsafe approach to implement authentication. TODO: use bcrypt & jwt later
   _saveUserData = token => {
     localStorage.setItem(AUTH_TOKEN, token);
   };
