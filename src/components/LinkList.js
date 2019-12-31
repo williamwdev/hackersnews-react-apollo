@@ -3,31 +3,41 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Link from "./Link";
 
-export default class LinkList extends Component {
-  render() {
-    // using gql parser function to write and store the query. The gql function is used to parse the plain string that contains the GraphQL code.
-    const FEED_QUERY = gql`
-      {
-        feed {
-          links {
+export const FEED_QUERY = gql`
+  {
+    feed {
+      links {
+        id
+        createdAt
+        url
+        description
+        postedBy {
+          id
+          name
+        }
+        votes {
+          id
+          user {
             id
-            createdAt
-            url
-            description
-            postedBy {
-              id
-              name
-            }
-            votes {
-              id
-              user {
-                id
-              }
-            }
           }
         }
       }
-    `;
+    }
+  }
+`;
+
+export default class LinkList extends Component {
+  _updateCacheAfterVote = (store, createVote, linkId) => {
+    const data = store.readQuery({ query: FEED_QUERY });
+
+    const votedLink = data.feed.links.find(link => link.id === linkId);
+    votedLink.votes = createVote.link.votes;
+
+    store.writeQuery({ query: FEED_QUERY, data });
+  };
+
+  render() {
+    // using gql parser function to write and store the query. The gql function is used to parse the plain string that contains the GraphQL code.
 
     return (
       // using Query component to pass GraphQL query as prop
@@ -44,7 +54,12 @@ export default class LinkList extends Component {
           return (
             <div>
               {linksToRender.map(link => (
-                <Link key={link.id} link={link} />
+                <Link
+                  key={link.id}
+                  link={link}
+                  // index={index}
+                  updateStoreAfterVote={this._updateCacheAfterVote}
+                />
               ))}
             </div>
           );
