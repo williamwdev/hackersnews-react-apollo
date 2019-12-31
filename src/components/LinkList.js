@@ -14,6 +14,16 @@ export default class LinkList extends Component {
             createdAt
             url
             description
+            postedBy {
+              id
+              name
+            }
+            votes {
+              id
+              user {
+                id
+              }
+            }
           }
         }
       }
