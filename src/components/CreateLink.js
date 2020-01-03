@@ -42,11 +42,12 @@ export default class CreateLink extends Component {
           />
         </div>
 
-        {/* wrap button element as render prop function result with <Mutation /> component passing POST_MUTATION as prop. Pass description and url states as variables prop */}
+        {/* wrap button element as render prop function result with <Mutation /> component passing POST_MUTATION as prop. Pass description and url states as variables prop. */}
         <Mutation
           mutation={POST_MUTATION}
           variables={{ description, url }}
           onCompleted={() => this.props.history.push("/")}
+          // Allows to update store based on mutation's result
           update={(store, { data: { post } }) => {
             const data = store.readQuery({ query: FEED_QUERY });
             data.feed.links.unshift(post);
