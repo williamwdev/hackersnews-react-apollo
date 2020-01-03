@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withApollo } from "react-apollo";
+import { withApollo } from "react-apollo"; // When wrapped around a component. It injects the 'ApolloClient' instance into the components props
 import gql from "graphql";
 // import gql from 'graphql-tag'
 import Link from "./Link";
