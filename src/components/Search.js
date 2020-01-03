@@ -52,7 +52,13 @@ class Search extends Component {
   }
 
   _executeSearch = async () => {
-    // ... you'll implement this 🔜
+    const { filter } = this.state;
+    const result = await this.props.client.query({
+      query: FEED_SEARCH_QUERY,
+      variables: { filter }
+    });
+    const links = result.data.feed.links;
+    this.setState({ links });
   };
 }
 
