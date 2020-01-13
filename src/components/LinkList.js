@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Link from "./Link";
+import { LINKS_PER_PAGE } from '../constants';
 
 export const FEED_QUERY = gql`
   query FeedQuery($first: Int, $skip: Int, $orderBy: LinkOrderByInput) {
@@ -112,12 +113,22 @@ export default class LinkList extends Component {
     });
   };
 
+  _getQueryVariables = () => {
+    const isNewPage = this.props.location.pathname.includes('new')
+    const page = parseInt(this.props.match.params.page, 10)
+  
+    const skip = isNewPage ? (page - 1) * LINKS_PER_PAGE : 0
+    const first = isNewPage ? LINKS_PER_PAGE : 100
+    const orderBy = isNewPage ? 'createdAt_DESC' : null
+    return { first, skip, orderBy }
+  }
+
   render() {
     // using gql parser function to write and store the query. The gql function is used to parse the plain string that contains the GraphQL code.
 
     return (
       // using Query component to pass GraphQL query as prop
-      <Query query={FEED_QUERY}>
+      <Query query={FEED_QUERY} variables={this._getQueryVariables()}>
         {({ loading, error, data, subscribeToMore }) => {
           // loading is true as long as the req is still ongoing and the resp hasn't been received
           if (loading) return <div>Fetching...</div>;
