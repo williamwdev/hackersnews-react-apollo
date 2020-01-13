@@ -12,6 +12,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Authenticated users can upvote links (one vote per link and user)
 - Realtime updates when other users upvote a link or create a new one
 
+## Setting up
+- navigate into /server folder and run `npm start` in terminal (localhost:4000)
+- navigate into /hackernews-react-apollo folder and run `npm start` in terminal (localhost:3000)
+
 ## Tech Stack
 - React = Frontend framework for building the UI
 - Apollo Client 2.1 = Production-ready, caching GraphQL client
