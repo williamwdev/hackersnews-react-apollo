@@ -47,6 +47,33 @@ const NEW_LINKS_SUBSCRIPTION = gql`
   }
 `;
 
+const NEW_VOTES_SUBSCRIPTION = gql`
+  subscription {
+    newVote {
+      id
+      link {
+        id
+        url
+        description
+        createdAt
+        postedBy {
+          id
+          name
+        }
+        votes {
+          id
+          user {
+            id
+          }
+        }
+      }
+      user {
+        id
+      }
+    }
+  }
+`;
+
 export default class LinkList extends Component {
   _updateCacheAfterVote = (store, createVote, linkId) => {
     const data = store.readQuery({ query: FEED_QUERY });
@@ -78,6 +105,12 @@ export default class LinkList extends Component {
     });
   };
 
+  _subscribeToNewVotes = subscribeToMore => {
+    subscribeToMore({
+      document: NEW_VOTES_SUBSCRIPTION
+    });
+  };
+
   render() {
     // using gql parser function to write and store the query. The gql function is used to parse the plain string that contains the GraphQL code.
 
@@ -91,6 +124,8 @@ export default class LinkList extends Component {
           if (error) return <div>Error</div>;
 
           this._subscribeToNewLinks(subscribeToMore);
+          this._subscribeToNewLinks(subscribeToMore);
+          this._subscribeToNewVotes(subscribeToMore);
 
           // data = actual data that was received from the server. It has the links property which represents a list of link elements
           const linksToRender = data.feed.links;
