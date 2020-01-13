@@ -36,17 +36,23 @@ export default class LinkList extends Component {
     store.writeQuery({ query: FEED_QUERY, data });
   };
 
+  _subscribeToNewLinks = async () => {
+    // ... you'll implement this 🔜
+  }
+
   render() {
     // using gql parser function to write and store the query. The gql function is used to parse the plain string that contains the GraphQL code.
 
     return (
       // using Query component to pass GraphQL query as prop
       <Query query={FEED_QUERY}>
-        {({ loading, error, data }) => {
+        {({ loading, error, data, subscribeToMore }) => {
           // loading is true as long as the req is still ongoing and the resp hasn't been received
           if (loading) return <div>Fetching...</div>;
           // in case the req fails, this field will contain info about what exactly went wrong
           if (error) return <div>Error</div>;
+
+          this._subscribeToNewLinks(subscribeToMore)
 
           // data = actual data that was received from the server. It has the links property which represents a list of link elements
           const linksToRender = data.feed.links;
