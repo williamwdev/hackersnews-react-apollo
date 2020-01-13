@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Link from "./Link";
-import { LINKS_PER_PAGE } from '../constants';
+import { LINKS_PER_PAGE } from "../constants";
 
 export const FEED_QUERY = gql`
   query FeedQuery($first: Int, $skip: Int, $orderBy: LinkOrderByInput) {
@@ -114,14 +114,14 @@ export default class LinkList extends Component {
   };
 
   _getQueryVariables = () => {
-    const isNewPage = this.props.location.pathname.includes('new')
-    const page = parseInt(this.props.match.params.page, 10)
-  
-    const skip = isNewPage ? (page - 1) * LINKS_PER_PAGE : 0
-    const first = isNewPage ? LINKS_PER_PAGE : 100
-    const orderBy = isNewPage ? 'createdAt_DESC' : null
-    return { first, skip, orderBy }
-  }
+    const isNewPage = this.props.location.pathname.includes("new");
+    const page = parseInt(this.props.match.params.page, 10);
+
+    const skip = isNewPage ? (page - 1) * LINKS_PER_PAGE : 0;
+    const first = isNewPage ? LINKS_PER_PAGE : 100;
+    const orderBy = isNewPage ? "createdAt_DESC" : null;
+    return { first, skip, orderBy };
+  };
 
   render() {
     // using gql parser function to write and store the query. The gql function is used to parse the plain string that contains the GraphQL code.
@@ -136,23 +136,38 @@ export default class LinkList extends Component {
           if (error) return <div>Error</div>;
 
           this._subscribeToNewLinks(subscribeToMore);
-          this._subscribeToNewLinks(subscribeToMore);
           this._subscribeToNewVotes(subscribeToMore);
 
+          const linksToRender = this._getLinksToRender(data);
+          const isNewPage = this.props.location.pathname.includes("new");
+          const pageIndex = this.props.match.params.page
+            ? (this.props.match.params.page - 1) * LINKS_PER_PAGE
+            : 0;
+
           // data = actual data that was received from the server. It has the links property which represents a list of link elements
-          const linksToRender = data.feed.links;
+          // const linksToRender = data.feed.links;
 
           return (
-            <div>
-              {linksToRender.map(link => (
+            <>
+              {linksToRender.map((link, index) => (
                 <Link
                   key={link.id}
                   link={link}
-                  // index={index}
+                  index={index + pageIndex}
                   updateStoreAfterVote={this._updateCacheAfterVote}
                 />
               ))}
-            </div>
+              {isNewPage && (
+                <div className="flex ml4 mv3 gray">
+                  <div className="pointer mr2" onClick={this._previousPage}>
+                    Previous
+                  </div>
+                  <div className="pointer" onClick={() => this._nextPage(data)}>
+                    Next
+                  </div>
+                </div>
+              )}
+            </>
           );
         }}
       </Query>
