@@ -123,6 +123,22 @@ export default class LinkList extends Component {
     return { first, skip, orderBy };
   };
 
+  _nextPage = data => {
+    const page = parseInt(this.props.match.params.page, 10);
+    if (page <= data.feed.count / LINKS_PER_PAGE) {
+      const nextPage = page + 1;
+      this.props.history.push(`/new/${nextPage}`);
+    }
+  };
+
+  _previousPage = () => {
+    const page = parseInt(this.props.match.params.page, 10);
+    if (page > 1) {
+      const previousPage = page - 1;
+      this.props.history.push(`/new/${previousPage}`);
+    }
+  };
+
   render() {
     // using gql parser function to write and store the query. The gql function is used to parse the plain string that contains the GraphQL code.
 
