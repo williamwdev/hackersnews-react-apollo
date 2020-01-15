@@ -131,6 +131,16 @@ export default class LinkList extends Component {
     return { first, skip, orderBy };
   };
 
+  _getLinksToRender = data => {
+    const isNewPage = this.props.location.pathname.includes('new')
+    if (isNewPage) {
+      return data.feed.links
+    }
+    const rankedLinks = data.feed.links.slice()
+    rankedLinks.sort((l1, l2) => l2.votes.length - l1.votes.length)
+    return rankedLinks
+  }
+
   _nextPage = data => {
     const page = parseInt(this.props.match.params.page, 10);
     if (page <= data.feed.count / LINKS_PER_PAGE) {
