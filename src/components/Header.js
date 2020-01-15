@@ -9,18 +9,18 @@ export default class Header extends Component {
     return (
       <div className="flex pa1 justify-between nowrap orange">
         <div className="flex flex-fixed black">
-          
           <div className="fw7 mr1">Hacker News Clone</div>
+          {/* exact path to / */}
           <Link to="/" className="ml1 no-underline black">
             new
           </Link>
           <div className="ml1">|</div>
-
+          {/* exact path to /top */}
           <Link to="/top" className="ml1 no-underline black">
             top
           </Link>
           <div className="ml1">|</div>
-
+          {/* exact path to /search */}
           <Link to="/search" className="ml1 no-underline black">
             search
           </Link>
@@ -28,6 +28,7 @@ export default class Header extends Component {
           {authToken && (
             <div className="flex">
               <div className="ml1">|</div>
+              {/* exact path to /create */}
               <Link to="/create" className="ml1 no-underline black">
                 submit
               </Link>
