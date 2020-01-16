@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withApollo } from "react-apollo"; // When wrapped around a component. It injects the 'ApolloClient' instance into the components props
-// import gql from "graphql";
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 import Link from "./Link";
 
 const FEED_SEARCH_QUERY = gql`
@@ -33,6 +32,16 @@ class Search extends Component {
     filter: ""
   };
 
+  _executeSearch = async () => {
+    const { filter } = this.state;
+    const result = await this.props.client.query({
+      query: FEED_SEARCH_QUERY,
+      variables: { filter }
+    });
+    const links = result.data.feed.links;
+    this.setState({ links });
+  };
+
   render() {
     return (
       <div>
@@ -50,16 +59,6 @@ class Search extends Component {
       </div>
     );
   }
-
-  _executeSearch = async () => {
-    const { filter } = this.state;
-    const result = await this.props.client.query({
-      query: FEED_SEARCH_QUERY,
-      variables: { filter }
-    });
-    const links = result.data.feed.links;
-    this.setState({ links });
-  };
 }
 
 export default withApollo(Search);
