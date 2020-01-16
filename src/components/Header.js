@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import { withRouter } from "react-router";
+import { withRouter } from "react-router";
 import { AUTH_TOKEN } from "../constants";
 
-export default class Header extends Component {
+class Header extends Component {
   render() {
     const authToken = localStorage.getItem(AUTH_TOKEN);
     return (
@@ -57,3 +57,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default withRouter(Header);
