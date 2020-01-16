@@ -27,6 +27,21 @@ const MY_QUERY = gql`
   }
 `;
 
+function ShowingSomeErrors() {
+  const { loading, error, data } = useQuery(MY_QUERY, { errorPolicy: 'all' });
+
+  if (loading) return <span>loading...</span>
+  return (
+    <div>
+      <h2>Good: {data.goodField}</h2>
+      <pre>Bad: {error.graphQLErrors.map(({ message }, i) => (
+        <span key={i}>{message}</span>
+      ))}
+      </pre>
+    </div>
+  );
+}
+
 class Login extends Component {
   state = {
     login: true, // switch between Login and Signup
@@ -38,9 +53,7 @@ class Login extends Component {
 
   render() {
     const { login, email, password, name } = this.state;
-    const { loading, error, data } = useQuery(MY_QUERY, { errorPolicy: 'all' });
 
-    if (loading) return <span>loading...</span>
     return (
       <div>
         <h4 className="mv3">{login ? "Login" : "Sign Up"}</h4>
