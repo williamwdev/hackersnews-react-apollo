@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { AUTH_TOKEN } from "../constants";
+import { useQuery } from '@apollo/react-hooks';
 
 const SIGNUP_MUTATION = gql`
   mutation SignupMutation($email: String!, $password: String!, $name: String!) {
@@ -19,19 +20,32 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
+const MY_QUERY = gql`
+  query WillFail {
+    badField
+    goodField
+  }
+`;
+
 class Login extends Component {
   state = {
     login: true, // switch between Login and Signup
     email: "",
     password: "",
-    name: ""
+    name: "",
+    error: null,
   };
 
   render() {
     const { login, email, password, name } = this.state;
+    const { loading, error, data } = useQuery(MY_QUERY, { errorPolicy: 'all' });
+
+    if (loading) return <span>loading...</span>
     return (
       <div>
         <h4 className="mv3">{login ? "Login" : "Sign Up"}</h4>
+
+        {/* Registration */}
         <div className="flex flex-column">
           {!login && (
             <input
@@ -54,6 +68,7 @@ class Login extends Component {
             placeholder="Choose a safe password"
           />
         </div>
+
         <div className="flex mt3">
           <Mutation
             mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}

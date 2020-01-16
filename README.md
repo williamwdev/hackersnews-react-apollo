@@ -23,3 +23,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - graphql-yogo = Fully-featured GraphQL Server with focus on easy setup, performance & great developer experience
 - Prisma = Open-source GraphQL API layer that turns your database into a GraphQL API
 
+## Additional Resources
+- [GraphQL error handling](https://www.apollographql.com/docs/react/data/error-handling/)
+
