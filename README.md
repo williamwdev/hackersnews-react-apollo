@@ -13,13 +13,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Realtime updates when other users upvote a link or create a new one
 
 ## Setting up
-- navigate into /server folder and run `npm start` in terminal (localhost:4000)
-- navigate into /hackernews-react-apollo folder and run `npm start` in terminal (localhost:3000)
+- navigate into /server folder and run `npm start` in terminal
+- navigate into /hackernews-react-apollo folder and run `npm start` in terminal (http://localhost:3000)
+- Interact with GraphQL API of the server inside GraphQL Playground on http://localhost:4000
 
 ## Tech Stack
 - React = Frontend framework for building the UI
 - Apollo Client 2.1 = Production-ready, caching GraphQL client
-
 - graphql-yogo = Fully-featured GraphQL Server with focus on easy setup, performance & great developer experience
 - Prisma = Open-source GraphQL API layer that turns your database into a GraphQL API
 
