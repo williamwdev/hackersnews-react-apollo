@@ -26,7 +26,7 @@ const VOTE_MUTATION = gql`
 export default class Link extends Component {
   render() {
     const authToken = localStorage.getItem(AUTH_TOKEN);
-    
+
     return (
       <div className="flex mt2 items-start">
         <div className="flex items-center">
@@ -36,8 +36,8 @@ export default class Link extends Component {
               mutation={VOTE_MUTATION}
               variables={{ linkId: this.props.link.id }}
               update={(store, { data: { vote } }) =>
-              this.props.updateStoreAfterVote(store, vote, this.props.link.id)
-            }
+                this.props.updateStoreAfterVote(store, vote, this.props.link.id)
+              }
             >
               {voteMutation => (
                 <div className="ml1 gray f11" onClick={voteMutation}>
@@ -47,10 +47,18 @@ export default class Link extends Component {
             </Mutation>
           )}
         </div>
+
+        {/* individual link element */}
         <div className="ml1">
-          <div>
-            {this.props.link.description} ({this.props.link.url})
-          </div>
+          <div className="link-url">{this.props.link.description}</div>(
+          <a
+            href={this.props.link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {this.props.link.url}
+          </a>
+          )
           <div className="f6 lh-copy gray">
             {this.props.link.votes.length} votes | by{" "}
             {this.props.link.postedBy

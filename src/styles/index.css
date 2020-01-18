@@ -17,6 +17,14 @@ input {
   max-width: 500px;
 }
 
+a {
+  text-decoration: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 .gray {
   color: #828282;
 }
@@ -35,10 +43,15 @@ input {
 
 .w85 {
   width: 85%;
+  margin-top: 15px;
 }
 
 .f11:hover {
   cursor: pointer;
+}
+
+.link-url {
+  display: inline-block;
 }
 
 .button {
