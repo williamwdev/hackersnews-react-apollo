@@ -37,6 +37,10 @@ input {
   width: 85%;
 }
 
+.f11:hover {
+  cursor: pointer;
+}
+
 .button {
   font-family: monospace;
   font-size: 10pt;
