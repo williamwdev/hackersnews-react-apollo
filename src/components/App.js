@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import LinkList from "./LinkList";
 import CreateLink from "./CreateLink";
 import Header from "./Header";
@@ -7,8 +7,7 @@ import Search from "./Search";
 import { Switch, Route, Redirect } from "react-router-dom";
 import "../styles/App.css";
 
-class App extends Component {
-  render() {
+function App() {
     return (
       <div className="center w85">
         <Header />
@@ -24,7 +23,6 @@ class App extends Component {
         </div>
       </div>
     );
-  }
 }
 
 export default App;
